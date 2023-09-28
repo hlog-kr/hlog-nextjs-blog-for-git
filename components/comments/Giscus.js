@@ -43,6 +43,8 @@ const Giscus = () => {
     script.setAttribute('data-lang', lang)
     script.setAttribute('data-theme', commentsTheme)
     script.setAttribute('crossorigin', 'anonymous')
+    // 엄격한 제목 일치 사용
+    script.setAttribute('data-strict', '1')
     script.async = true
 
     const comments = document.getElementById(COMMENTS_ID)

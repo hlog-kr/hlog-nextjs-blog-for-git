@@ -3,8 +3,24 @@ import PageTitle from '@/components/PageTitle'
 import generateRss from '@/lib/generate-rss'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
 import { formatSlug, getAllFilesFrontMatter, getFileBySlug, getFiles } from '@/lib/mdx'
+import kebabCase from '@/lib/utils/kebabCase'
 
 const DEFAULT_LAYOUT = 'PostToc'
+
+function getRelatedPosts(allPosts, currentPost) {
+  const defaultCount = 5
+
+  return allPosts
+    .filter(
+      (item) =>
+        item.draft !== true &&
+        item.slug !== currentPost.frontMatter.slug &&
+        item.tags.filter((tag) =>
+          currentPost.frontMatter.tags.map((m) => kebabCase(m)).includes(kebabCase(tag))
+        ).length > 0
+    )
+    .slice(0, defaultCount)
+}
 
 export async function getStaticPaths() {
   const posts = getFiles('blog')
@@ -31,16 +47,18 @@ export async function getStaticProps({ params }) {
   })
   const authorDetails = await Promise.all(authorPromise)
 
+  const relatedPosts = getRelatedPosts(allPosts, post)
+
   // rss
   if (allPosts.length > 0) {
     const rss = generateRss(allPosts)
     fs.writeFileSync('./public/feed.xml', rss)
   }
 
-  return { props: { post, authorDetails, prev, next } }
+  return { props: { post, authorDetails, prev, next, relatedPosts } }
 }
 
-export default function Blog({ post, authorDetails, prev, next }) {
+export default function Blog({ post, authorDetails, prev, next, relatedPosts }) {
   const { mdxSource, toc, frontMatter } = post
 
   return (
@@ -54,6 +72,7 @@ export default function Blog({ post, authorDetails, prev, next }) {
           authorDetails={authorDetails}
           prev={prev}
           next={next}
+          relatedPosts={relatedPosts}
         />
       ) : (
         <div className="mt-24 text-center">

@@ -6,10 +6,11 @@ import siteMetadata from '@/data/siteMetadata'
 import Comments from '@/components/comments'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import TocSide from '@/components/Tocbot'
+import RelatedPosts from '@/components/RelatedPosts'
 
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
-export default function PostLayout({ frontMatter, authorDetails, children }) {
+export default function PostLayout({ frontMatter, authorDetails, children, relatedPosts }) {
   const { slug, date, title, tags } = frontMatter
 
   return (
@@ -46,6 +47,7 @@ export default function PostLayout({ frontMatter, authorDetails, children }) {
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
               <div className="prose max-w-none pt-10 pb-8 dark:prose-dark">{children}</div>
               <Comments frontMatter={frontMatter} />
+              <RelatedPosts posts={relatedPosts} />
             </div>
             <footer style={{ position: 'sticky', top: '32px' }}>
               <TocSide />

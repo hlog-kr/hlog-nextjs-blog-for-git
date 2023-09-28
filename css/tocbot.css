@@ -51,9 +51,11 @@ a.toc-link {
 .is-active-link::before {
   background-color: #37c3b3;
 }
+/*
 .toc-link:hover {
   color: white;
 }
+*/
 
 @media (min-width: 1280px) {
   .lg-block {

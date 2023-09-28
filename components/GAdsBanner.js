@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import siteMetadata from '@/data/siteMetadata'
 
 const GAdsBanner = ({ slot }) => {
-  const isProduction = true //process.env.NODE_ENV === 'production'
+  const isProduction = process.env.NODE_ENV === 'production'
 
   useEffect(() => {
     if (!isProduction) return

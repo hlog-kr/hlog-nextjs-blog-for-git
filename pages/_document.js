@@ -2,7 +2,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document'
 import siteMetadata from '@/data/siteMetadata'
 class MyDocument extends Document {
   render() {
-    const isProduction = true //process.env.NODE_ENV === 'production' // add
+    const isProduction = process.env.NODE_ENV === 'production' // add
 
     return (
       <Html lang="en" className="scroll-smooth">

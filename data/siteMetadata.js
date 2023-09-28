@@ -27,6 +27,9 @@ const siteMetadata = {
     googleAnalyticsId: 'Your Measurement ID', // e.g. UA-000000-2 or G-XXXXXXX
     posthogAnalyticsId: '', // posthog.init e.g. phc_5yXvArzvRdqtZIsHkEm3Fkkhm3d0bEYUXCaFISzqPSQ
   },
+  ads: {
+    googleAdsenseId: 'your_googleAdsenseId',
+  },
   newsletter: {
     // supports mailchimp, buttondown, convertkit, klaviyo, revue, emailoctopus
     // Please add your .env file and modify it according to your selection

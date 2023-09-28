@@ -7,6 +7,7 @@ import Comments from '@/components/comments'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import TocSide from '@/components/Tocbot'
 import RelatedPosts from '@/components/RelatedPosts'
+import GAdsBanner from '@/components/GAdsBanner'
 
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
@@ -64,6 +65,9 @@ export default function PostLayout({ frontMatter, authorDetails, children, relat
                     </div>
                   </div>
                 )}
+              </div>
+              <div className="lg-block hidden">
+                <GAdsBanner slot="your_slotnumber" />
               </div>
             </footer>
           </div>

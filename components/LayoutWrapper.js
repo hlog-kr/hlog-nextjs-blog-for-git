@@ -6,6 +6,7 @@ import SectionContainer from './SectionContainer'
 import Footer from './Footer'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
+import GAdsBanner from '@/components/GAdsBanner'
 
 const LayoutWrapper = ({ children }) => {
   return (
@@ -44,6 +45,7 @@ const LayoutWrapper = ({ children }) => {
             <MobileNav />
           </div>
         </header>
+        <GAdsBanner slot="your_slotnumber" />
         <main className="mb-auto">{children}</main>
         <Footer />
       </div>

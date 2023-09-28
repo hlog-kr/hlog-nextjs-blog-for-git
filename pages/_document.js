@@ -1,6 +1,9 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
+import siteMetadata from '@/data/siteMetadata'
 class MyDocument extends Document {
   render() {
+    const isProduction = true //process.env.NODE_ENV === 'production' // add
+
     return (
       <Html lang="en" className="scroll-smooth">
         <Head>
@@ -23,6 +26,15 @@ class MyDocument extends Document {
           <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
           <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
           <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+          {/* add [[ */}
+          {isProduction && (
+            <script
+              async
+              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteMetadata.ads.googleAdsenseId}`}
+              crossOrigin="anonymous"
+            ></script>
+          )}
+          {/* add ]] */}
         </Head>
         <body className="bg-white text-black antialiased dark:bg-gray-900 dark:text-white">
           <Main />

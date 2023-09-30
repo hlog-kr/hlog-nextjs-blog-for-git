@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 const RelatedPosts = ({ posts }) => {
+  const { t } = useTranslation('common')
   const { locale } = useRouter()
 
   if (!posts || posts.length === 0) return null
@@ -9,7 +11,7 @@ const RelatedPosts = ({ posts }) => {
   return (
     <div className="my-2 rounded-lg bg-gray-100 py-4 pl-4 pr-4 dark:bg-gray-800 xl:py-8">
       <h2 className="toc-ignore mb-2 text-base font-bold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-        Related Tags Posts
+        {t('related_tags')}
       </h2>
       {posts.map((post, index) => (
         <div key={post.slug} className="py-2">

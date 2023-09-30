@@ -1,11 +1,27 @@
 import Link from '@/components/Link'
 import { PageSEO } from '@/components/SEO'
 import siteMetadata from '@/data/siteMetadata'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 
-export default function FourZeroFour() {
+export async function getStaticProps({ locale, locales }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+      locale,
+      availableLocales: locales,
+    },
+  }
+}
+
+export default function FourZeroFour({ availableLocales }) {
+  const { t } = useTranslation('common')
   return (
     <>
-      <PageSEO title={`Page Not Found - ${siteMetadata.title}`} />
+      <PageSEO
+        title={`Page Not Found - ${siteMetadata.title}`}
+        availableLocales={availableLocales}
+      />
       <div className="flex flex-col items-start justify-start md:mt-24 md:flex-row md:items-center md:justify-center md:space-x-6">
         <div className="space-x-2 pt-6 pb-8 md:space-y-5">
           <h1 className="text-6xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 md:border-r-2 md:px-6 md:text-8xl md:leading-14">
@@ -13,15 +29,11 @@ export default function FourZeroFour() {
           </h1>
         </div>
         <div className="max-w-md">
-          <p className="mb-4 text-xl font-bold leading-normal md:text-2xl">
-            Sorry we couldn't find this page.
-          </p>
-          <p className="mb-8">
-            But dont worry, you can find plenty of other things on our homepage.
-          </p>
+          <p className="mb-4 text-xl font-bold leading-normal md:text-2xl">{t('404_desc01')}</p>
+          <p className="mb-8">{t('404_desc02')}</p>
           <Link href="/">
             <button className="focus:shadow-outline-blue inline rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium leading-5 text-white shadow transition-colors duration-150 hover:bg-blue-700 focus:outline-none dark:hover:bg-blue-500">
-              Back to homepage
+              {t('back_home')}
             </button>
           </Link>
         </div>

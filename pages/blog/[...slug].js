@@ -10,6 +10,7 @@ import {
   getFiles,
 } from '@/lib/mdx'
 import kebabCase from '@/lib/utils/kebabCase'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const DEFAULT_LAYOUT = 'PostToc'
 
@@ -86,7 +87,17 @@ export async function getStaticProps({ params, locale, defaultLocale, locales })
     fs.writeFileSync(`./public/${feedName}`, rss)
   }
 
-  return { props: { post, authorDetails, prev, next, relatedPosts, availableLocales } }
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+      post,
+      authorDetails,
+      prev,
+      next,
+      relatedPosts,
+      availableLocales,
+    },
+  }
 }
 
 export default function Blog({ post, authorDetails, prev, next, relatedPosts, availableLocales }) {

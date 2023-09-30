@@ -1,3 +1,7 @@
 {
-  "all": "All Posts"
+  "all": "All Posts",
+  "404_desc01": "Sorry we couldn't find this page.",
+  "404_desc02": "But dont worry, you can find plenty of other things on our homepage.",
+  "back_home": "Back to home",
+  "related_tags": "Related Tags Posts"
 }

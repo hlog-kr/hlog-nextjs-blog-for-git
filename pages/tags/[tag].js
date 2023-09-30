@@ -39,6 +39,15 @@ export async function getStaticProps({ params, locale, defaultLocale, locales })
     (post) => post.draft !== true && post.tags.map((t) => kebabCase(t)).includes(params.tag)
   )
 
+  // Find the list of available languages.
+  const availableLocales = []
+  await Promise.all(
+    locales.map(async (local) => {
+      const tags = await getAllTags('blog', local, defaultLocale, locales)
+      if (tags[params.tag] !== undefined) availableLocales.push(local)
+    })
+  )
+
   // rss
   if (filteredPosts.length > 0) {
     const feedName = locale === defaultLocale ? 'feed.xml' : `feed.${locale}.xml`
@@ -48,10 +57,10 @@ export async function getStaticProps({ params, locale, defaultLocale, locales })
     fs.writeFileSync(path.join(rssPath, feedName), rss)
   }
 
-  return { props: { posts: filteredPosts, tag: params.tag } }
+  return { props: { posts: filteredPosts, tag: params.tag, availableLocales } }
 }
 
-export default function Tag({ posts, tag }) {
+export default function Tag({ posts, tag, availableLocales }) {
   // Capitalize first letter and convert space to dash
   const title = tag[0].toUpperCase() + tag.split(' ').join('-').slice(1)
   return (
@@ -59,6 +68,7 @@ export default function Tag({ posts, tag }) {
       <TagSEO
         title={`${tag} - ${siteMetadata.author}`}
         description={`${tag} tags - ${siteMetadata.author}`}
+        availableLocales={availableLocales}
       />
       <ListLayout posts={posts} title={title} />
     </>

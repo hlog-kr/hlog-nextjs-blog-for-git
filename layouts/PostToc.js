@@ -11,7 +11,13 @@ import GAdsBanner from '@/components/GAdsBanner'
 
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
-export default function PostLayout({ frontMatter, authorDetails, children, relatedPosts }) {
+export default function PostLayout({
+  frontMatter,
+  authorDetails,
+  children,
+  relatedPosts,
+  availableLocales,
+}) {
   const { slug, date, title, tags } = frontMatter
 
   return (
@@ -20,6 +26,7 @@ export default function PostLayout({ frontMatter, authorDetails, children, relat
         url={`${siteMetadata.siteUrl}/blog/${slug}`}
         authorDetails={authorDetails}
         {...frontMatter}
+        availableLocales={availableLocales}
       />
       <ScrollTopAndComment />
       <article>

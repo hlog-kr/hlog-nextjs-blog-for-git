@@ -16,7 +16,14 @@ const discussUrl = (slug) =>
 
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
-export default function PostLayout({ frontMatter, authorDetails, next, prev, children }) {
+export default function PostLayout({
+  frontMatter,
+  authorDetails,
+  next,
+  prev,
+  children,
+  availableLocales,
+}) {
   const { slug, fileName, date, title, images, tags } = frontMatter
 
   return (
@@ -25,6 +32,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
         url={`${siteMetadata.siteUrl}/blog/${slug}`}
         authorDetails={authorDetails}
         {...frontMatter}
+        availableLocales={availableLocales}
       />
       <ScrollTopAndComment />
       <article>

@@ -3,16 +3,17 @@ import projectsData from '@/data/projectsData'
 import Card from '@/components/Card'
 import { PageSEO } from '@/components/SEO'
 
-export async function getStaticProps({ locale }) {
-  return { props: { locale } }
+export async function getStaticProps({ locale, locales }) {
+  return { props: { locale, availableLocales: locales } }
 }
 
-export default function Projects({ locale }) {
+export default function Projects({ locale, availableLocales }) {
   return (
     <>
       <PageSEO
         title={`Projects - ${siteMetadata.author}`}
         description={siteMetadata.description[locale]}
+        availableLocales={availableLocales}
       />
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">

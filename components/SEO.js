@@ -2,7 +2,15 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import siteMetadata from '@/data/siteMetadata'
 
-const CommonSEO = ({ title, description, ogType, ogImage, twImage, canonicalUrl }) => {
+const CommonSEO = ({
+  title,
+  description,
+  ogType,
+  ogImage,
+  twImage,
+  canonicalUrl,
+  availableLocales,
+}) => {
   const router = useRouter()
   return (
     <Head>
@@ -28,11 +36,28 @@ const CommonSEO = ({ title, description, ogType, ogImage, twImage, canonicalUrl 
         rel="canonical"
         href={canonicalUrl ? canonicalUrl : `${siteMetadata.siteUrl}${router.asPath}`}
       />
+      {availableLocales &&
+        availableLocales.length > 1 &&
+        availableLocales.map((locale) => (
+          <link
+            rel="alternate"
+            hrefLang={locale}
+            href={`${siteMetadata.siteUrl}${locale === router.defaultLocale ? '' : `/${locale}`}${
+              router.asPath
+            }`}
+            key={locale}
+          />
+        ))}
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        href={`/feed${router.locale === router.defaultLocale ? '' : `.${router.locale}`}.xml`}
+      />
     </Head>
   )
 }
 
-export const PageSEO = ({ title, description }) => {
+export const PageSEO = ({ title, description, availableLocales }) => {
   const ogImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
   const twImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
   return (
@@ -42,11 +67,12 @@ export const PageSEO = ({ title, description }) => {
       ogType="website"
       ogImage={ogImageUrl}
       twImage={twImageUrl}
+      availableLocales={availableLocales}
     />
   )
 }
 
-export const TagSEO = ({ title, description }) => {
+export const TagSEO = ({ title, description, availableLocales }) => {
   const ogImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
   const twImageUrl = siteMetadata.siteUrl + siteMetadata.socialBanner
   const router = useRouter()
@@ -58,6 +84,7 @@ export const TagSEO = ({ title, description }) => {
         ogType="website"
         ogImage={ogImageUrl}
         twImage={twImageUrl}
+        availableLocales={availableLocales}
       />
       <Head>
         <link
@@ -80,6 +107,7 @@ export const BlogSEO = ({
   url,
   images = [],
   canonicalUrl,
+  availableLocales,
 }) => {
   const router = useRouter()
   const publishedAt = new Date(date).toISOString()
@@ -147,6 +175,7 @@ export const BlogSEO = ({
         ogImage={featuredImages}
         twImage={twImageUrl}
         canonicalUrl={canonicalUrl}
+        availableLocales={availableLocales}
       />
       <Head>
         {date && <meta property="article:published_time" content={publishedAt} />}

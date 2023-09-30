@@ -2,7 +2,13 @@ import fs from 'fs'
 import PageTitle from '@/components/PageTitle'
 import generateRss from '@/lib/generate-rss'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
-import { formatSlug, getAllFilesFrontMatter, getFileBySlug, getFiles } from '@/lib/mdx'
+import {
+  formatSlug,
+  getAllFilesFrontMatter,
+  getAvailableLocalesBySlug,
+  getFileBySlug,
+  getFiles,
+} from '@/lib/mdx'
 import kebabCase from '@/lib/utils/kebabCase'
 
 const DEFAULT_LAYOUT = 'PostToc'
@@ -64,6 +70,15 @@ export async function getStaticProps({ params, locale, defaultLocale, locales })
 
   const relatedPosts = getRelatedPosts(allPosts, post)
 
+  // Call the function for filtering available languages.
+  const availableLocales = await getAvailableLocalesBySlug(
+    'blog',
+    params.slug.join('/'),
+    locale,
+    defaultLocale,
+    locales
+  )
+
   // rss
   if (allPosts.length > 0) {
     const feedName = locale === defaultLocale ? 'feed.xml' : `feed.${locale}.xml`
@@ -71,10 +86,10 @@ export async function getStaticProps({ params, locale, defaultLocale, locales })
     fs.writeFileSync(`./public/${feedName}`, rss)
   }
 
-  return { props: { post, authorDetails, prev, next, relatedPosts } }
+  return { props: { post, authorDetails, prev, next, relatedPosts, availableLocales } }
 }
 
-export default function Blog({ post, authorDetails, prev, next, relatedPosts }) {
+export default function Blog({ post, authorDetails, prev, next, relatedPosts, availableLocales }) {
   const { mdxSource, toc, frontMatter } = post
 
   return (
@@ -89,6 +104,7 @@ export default function Blog({ post, authorDetails, prev, next, relatedPosts }) 
           prev={prev}
           next={next}
           relatedPosts={relatedPosts}
+          availableLocales={availableLocales}
         />
       ) : (
         <div className="mt-24 text-center">

@@ -5,8 +5,8 @@ import siteMetadata from '@/data/siteMetadata'
 import { getAllTags } from '@/lib/tags'
 import kebabCase from '@/lib/utils/kebabCase'
 
-export async function getStaticProps() {
-  const tags = await getAllTags('blog')
+export async function getStaticProps({ locale, defaultLocale, locales }) {
+  const tags = await getAllTags('blog', locale, defaultLocale, locales)
 
   return { props: { tags } }
 }

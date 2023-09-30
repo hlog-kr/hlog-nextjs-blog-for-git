@@ -22,24 +22,39 @@ function getRelatedPosts(allPosts, currentPost) {
     .slice(0, defaultCount)
 }
 
-export async function getStaticPaths() {
-  const posts = getFiles('blog')
+export async function getStaticPaths({ locales, defaultLocale }) {
+  // Generate paths for all languages
+  const localePosts = (
+    await Promise.all(
+      locales.map(async (locale) => {
+        const posts = getFiles('blog', locale, defaultLocale, locales)
+        return posts.map((post) => ({
+          params: {
+            slug: formatSlug(post, locales).split('/'), // Add locales
+          },
+          locale,
+        }))
+      })
+    )
+  ).flat()
+
   return {
-    paths: posts.map((p) => ({
-      params: {
-        slug: formatSlug(p).split('/'),
-      },
+    paths: localePosts.map(({ params, locale }) => ({
+      params,
+      locale,
     })),
     fallback: false,
   }
 }
 
-export async function getStaticProps({ params }) {
-  const allPosts = await getAllFilesFrontMatter('blog')
-  const postIndex = allPosts.findIndex((post) => formatSlug(post.slug) === params.slug.join('/'))
+export async function getStaticProps({ params, locale, defaultLocale, locales }) {
+  const allPosts = await getAllFilesFrontMatter('blog', locale, defaultLocale, locales)
+  const postIndex = allPosts.findIndex(
+    (post) => formatSlug(post.slug, locales) === params.slug.join('/')
+  )
   const prev = allPosts[postIndex + 1] || null
   const next = allPosts[postIndex - 1] || null
-  const post = await getFileBySlug('blog', params.slug.join('/'))
+  const post = await getFileBySlug('blog', params.slug.join('/'), locale, defaultLocale)
   const authorList = post.frontMatter.authors || ['default']
   const authorPromise = authorList.map(async (author) => {
     const authorResults = await getFileBySlug('authors', [author])

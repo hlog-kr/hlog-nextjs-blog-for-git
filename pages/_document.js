@@ -5,7 +5,7 @@ class MyDocument extends Document {
     const isProduction = process.env.NODE_ENV === 'production' // add
 
     return (
-      <Html lang="en" className="scroll-smooth">
+      <Html className="scroll-smooth">
         <Head>
           <link rel="apple-touch-icon" sizes="76x76" href="/static/favicons/apple-touch-icon.png" />
           <link

@@ -52,14 +52,15 @@ export async function getStaticProps(context) {
       posts,
       initialDisplayPosts,
       pagination,
+      locale,
     },
   }
 }
 
-export default function PostPage({ posts, initialDisplayPosts, pagination }) {
+export default function PostPage({ posts, initialDisplayPosts, pagination, locale }) {
   return (
     <>
-      <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
+      <PageSEO title={siteMetadata.title} description={siteMetadata.description[locale]} />
       <ListLayout
         posts={posts}
         initialDisplayPosts={initialDisplayPosts}

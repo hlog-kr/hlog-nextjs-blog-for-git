@@ -21,15 +21,19 @@ export async function getStaticProps({ locale, defaultLocale, locales }) {
       initialDisplayPosts,
       posts,
       pagination,
+      locale,
     },
   }
 }
 
-export default function Blog({ posts, initialDisplayPosts, pagination }) {
+export default function Blog({ posts, initialDisplayPosts, pagination, locale }) {
   const { t } = useTranslation('common')
   return (
     <>
-      <PageSEO title={`Blog - ${siteMetadata.author}`} description={siteMetadata.description} />
+      <PageSEO
+        title={`Blog - ${siteMetadata.author}`}
+        description={siteMetadata.description[locale]}
+      />
       <ListLayout
         posts={posts}
         initialDisplayPosts={initialDisplayPosts}

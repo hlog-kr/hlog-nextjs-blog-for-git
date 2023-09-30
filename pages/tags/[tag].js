@@ -41,10 +41,11 @@ export async function getStaticProps({ params, locale, defaultLocale, locales })
 
   // rss
   if (filteredPosts.length > 0) {
-    const rss = generateRss(filteredPosts, `tags/${params.tag}/feed.xml`)
+    const feedName = locale === defaultLocale ? 'feed.xml' : `feed.${locale}.xml`
+    const rss = generateRss(filteredPosts, `tags/${params.tag}/${feedName}`, locale)
     const rssPath = path.join(root, 'public', 'tags', params.tag)
     fs.mkdirSync(rssPath, { recursive: true })
-    fs.writeFileSync(path.join(rssPath, 'feed.xml'), rss)
+    fs.writeFileSync(path.join(rssPath, feedName), rss)
   }
 
   return { props: { posts: filteredPosts, tag: params.tag } }

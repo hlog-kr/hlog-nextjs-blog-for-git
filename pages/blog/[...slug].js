@@ -66,8 +66,9 @@ export async function getStaticProps({ params, locale, defaultLocale, locales })
 
   // rss
   if (allPosts.length > 0) {
-    const rss = generateRss(allPosts)
-    fs.writeFileSync('./public/feed.xml', rss)
+    const feedName = locale === defaultLocale ? 'feed.xml' : `feed.${locale}.xml`
+    const rss = generateRss(allPosts, feedName, locale)
+    fs.writeFileSync(`./public/${feedName}`, rss)
   }
 
   return { props: { post, authorDetails, prev, next, relatedPosts } }

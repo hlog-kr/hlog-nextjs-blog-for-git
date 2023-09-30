@@ -2,7 +2,10 @@ const siteMetadata = {
   title: 'HLog Next.js - for git',
   author: 'hlog',
   headerTitle: 'HLog Mirroring',
-  description: 'HLog 블로그의 Next.js 글 이해를 돕기 위한 Git 소스 공유용 블로그입니다.',
+  description: {
+    en: "This blog is for sharing Git source code to help understand HLog's Next.js articles.",
+    ko: 'HLog 블로그의 Next.js 글 이해를 돕기 위한 Git 소스 공유용 블로그입니다.',
+  },
   language: 'ko-KR',
   theme: 'system', // system, dark or light
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',

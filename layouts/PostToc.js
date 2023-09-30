@@ -8,6 +8,7 @@ import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import TocSide from '@/components/Tocbot'
 import RelatedPosts from '@/components/RelatedPosts'
 import GAdsBanner from '@/components/GAdsBanner'
+import { useRouter } from 'next/router'
 
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
@@ -19,6 +20,7 @@ export default function PostLayout({
   availableLocales,
 }) {
   const { slug, date, title, tags } = frontMatter
+  const { locale } = useRouter()
 
   return (
     <SectionContainer>
@@ -38,7 +40,7 @@ export default function PostLayout({
                   <dt className="sr-only">Published on</dt>
                   <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                     <time dateTime={date}>
-                      {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+                      {new Date(date).toLocaleDateString(locale, postDateTemplate)}
                     </time>
                   </dd>
                 </div>

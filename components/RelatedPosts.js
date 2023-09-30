@@ -1,7 +1,9 @@
 import Link from 'next/link'
-import siteMetadata from '@/data/siteMetadata'
+import { useRouter } from 'next/router'
 
 const RelatedPosts = ({ posts }) => {
+  const { locale } = useRouter()
+
   if (!posts || posts.length === 0) return null
 
   return (
@@ -13,7 +15,7 @@ const RelatedPosts = ({ posts }) => {
         <div key={post.slug} className="py-2">
           <div className="flex flex-row content-center justify-start space-x-6">
             <div className="min-w-[80px] text-xs font-semibold text-rose-400">
-              {new Date(post.date).toLocaleDateString(siteMetadata.locale, {
+              {new Date(post.date).toLocaleDateString(locale, {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',

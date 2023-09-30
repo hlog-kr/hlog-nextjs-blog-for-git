@@ -6,6 +6,7 @@ import siteMetadata from '@/data/siteMetadata'
 import formatDate from '@/lib/utils/formatDate'
 import Comments from '@/components/comments'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import { useRouter } from 'next/router'
 
 export default function PostLayout({
   frontMatter,
@@ -16,6 +17,7 @@ export default function PostLayout({
   availableLocales,
 }) {
   const { date, title } = frontMatter
+  const { locale } = useRouter()
 
   return (
     <SectionContainer>
@@ -33,7 +35,7 @@ export default function PostLayout({
                 <div>
                   <dt className="sr-only">Published on</dt>
                   <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                    <time dateTime={date}>{formatDate(date)}</time>
+                    <time dateTime={date}>{formatDate(date, locale)}</time>
                   </dd>
                 </div>
               </dl>

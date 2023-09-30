@@ -7,6 +7,7 @@ import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import Comments from '@/components/comments'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import { useRouter } from 'next/router'
 
 const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/blog/${fileName}`
 const discussUrl = (slug) =>
@@ -25,6 +26,7 @@ export default function PostLayout({
   availableLocales,
 }) {
   const { slug, fileName, date, title, images, tags } = frontMatter
+  const { locale } = useRouter()
 
   return (
     <SectionContainer>
@@ -44,7 +46,7 @@ export default function PostLayout({
                   <dt className="sr-only">Published on</dt>
                   <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                     <time dateTime={date}>
-                      {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+                      {new Date(date).toLocaleDateString(locale, postDateTemplate)}
                     </time>
                   </dd>
                 </div>

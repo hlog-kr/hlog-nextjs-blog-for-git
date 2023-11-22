@@ -25,7 +25,7 @@ function App({ Component, pageProps }) {
       </Head>
       {isDevelopment && isSocket && <ClientReload />}
       <Analytics />
-      <LayoutWrapper>
+      <LayoutWrapper pageProps={pageProps}>
         <Component {...pageProps} />
       </LayoutWrapper>
     </ThemeProvider>

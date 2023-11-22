@@ -9,7 +9,8 @@ import ThemeSwitch from './ThemeSwitch'
 import GAdsBanner from '@/components/GAdsBanner'
 import LanguageSwitch from '@/components/LanguageSwitch'
 
-const LayoutWrapper = ({ children }) => {
+const LayoutWrapper = ({ children, pageProps }) => {
+  const { availableLocales } = pageProps
   return (
     <SectionContainer>
       <div className="flex h-screen flex-col justify-between">
@@ -42,7 +43,7 @@ const LayoutWrapper = ({ children }) => {
                 </Link>
               ))}
             </div>
-            <LanguageSwitch />
+            <LanguageSwitch availableLocales={availableLocales} />
             <ThemeSwitch />
             <MobileNav />
           </div>
